@@ -66,6 +66,9 @@ public class MiniGUI {
         });
     }
 
+    /**
+     * Displays the current JFrame.
+     */
     private void display() {
         /*
          * Make the frame one fifth the resolution of the screen. This very method is
