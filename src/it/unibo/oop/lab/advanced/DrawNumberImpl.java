@@ -29,6 +29,7 @@ public final class DrawNumberImpl implements DrawNumber {
         this.reset();
     }
 
+
     @Override
     public void reset() {
         this.remainingAttempts = this.attempts;
