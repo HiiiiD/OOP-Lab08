@@ -19,8 +19,8 @@ public class ThisIsHowThingsShouldNotBeDone {
     /*
      * PMD complains:
      * 
-     * This class should be final, because it is a utility class (all methods
-     * are static)
+     * This class should be final, because it is a utility class (all methods are
+     * static)
      * 
      * This class should have a private constructor, because is not meant to be
      * extended (it is an utility class)

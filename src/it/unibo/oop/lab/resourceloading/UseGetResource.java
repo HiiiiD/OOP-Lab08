@@ -23,8 +23,9 @@ public final class UseGetResource {
 
     /**
      * @param args
-     *            Ignored
-     * @throws IOException if an I/O error occurs
+     *                 Ignored
+     * @throws IOException
+     *                         if an I/O error occurs
      */
     public static void main(final String... args) throws IOException {
         /*

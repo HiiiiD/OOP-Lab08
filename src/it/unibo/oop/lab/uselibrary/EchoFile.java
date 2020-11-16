@@ -12,17 +12,19 @@ import org.apache.commons.io.FileUtils;
  */
 public final class EchoFile {
 
-    private EchoFile() { }
+    private EchoFile() {
+    }
 
     /**
-     * @param args arguments list, used to fetch files.
-     * @throws IOException 
+     * @param args
+     *                 arguments list, used to fetch files.
+     * @throws IOException
      */
     public static void main(final String... args) throws IOException {
         if (args.length == 0) {
             System.out.println("At least an argument is required for this program to work.");
         }
-        for (final String fileName: args) {
+        for (final String fileName : args) {
             final File file = new File(fileName);
             System.out.println(FileUtils.readFileToString(file, StandardCharsets.UTF_8));
         }

@@ -16,11 +16,11 @@ public final class DrawNumberImpl implements DrawNumber {
 
     /**
      * @param min
-     *            minimum number
+     *                     minimum number
      * @param max
-     *            maximum number
+     *                     maximum number
      * @param attempts
-     *            the maximum number of attempts
+     *                     the maximum number of attempts
      */
     public DrawNumberImpl(final int min, final int max, final int attempts) {
         this.min = min;

@@ -8,7 +8,8 @@ public interface DrawNumberViewObserver {
     /**
      * Makes a guess.
      * 
-     * @param n the attempt
+     * @param n
+     *              the attempt
      */
     void newAttempt(int n);
 

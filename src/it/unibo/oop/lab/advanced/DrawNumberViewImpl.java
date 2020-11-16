@@ -80,8 +80,7 @@ public final class DrawNumberViewImpl implements DrawNumberView {
     }
 
     private boolean confirmDialog(final String question, final String name) {
-        return JOptionPane.showConfirmDialog(frame, question, name,
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        return JOptionPane.showConfirmDialog(frame, question, name, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 
     @Override
@@ -91,8 +90,7 @@ public final class DrawNumberViewImpl implements DrawNumberView {
 
     @Override
     public void numberIncorrect() {
-        JOptionPane.showMessageDialog(frame, "Incorrect Number.. try again", "Incorrect Number",
-                JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, "Incorrect Number.. try again", "Incorrect Number", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override

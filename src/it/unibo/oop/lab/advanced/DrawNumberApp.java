@@ -44,7 +44,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
 
     /**
      * @param args
-     *            ignored
+     *                 ignored
      */
     public static void main(final String... args) {
         new DrawNumberApp();
