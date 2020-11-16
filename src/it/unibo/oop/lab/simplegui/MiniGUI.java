@@ -7,9 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -26,13 +28,29 @@ public class MiniGUI {
     private final JFrame frame = new JFrame(TITLE);
 
     /**
-     * 
+     * Create a simple application with a GUI with a button and a panel in the center of the window.
      */
     public MiniGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
+        /**
+         * Button that prints a random number on the standard output
+         */
         final JButton write = new JButton("Print a random number on standard output");
-        canvas.add(write, BorderLayout.CENTER);
+        /*
+         * Panel with the button
+         */
+        final JPanel innerCenteredPanel = new JPanel();
+        final BoxLayout centeredPanelBoxLayout = new BoxLayout(innerCenteredPanel, BoxLayout.X_AXIS);
+        innerCenteredPanel.setLayout(centeredPanelBoxLayout);
+        innerCenteredPanel.add(write);
+        canvas.add(innerCenteredPanel, BorderLayout.CENTER);
+        /*
+         * Text field added to the north.
+         */
+        final JTextField resultTextField = new JTextField();
+        canvas.add(resultTextField, BorderLayout.NORTH);
+
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
@@ -41,7 +59,9 @@ public class MiniGUI {
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
+                final int newRandomInteger = rng.nextInt();
                 System.out.println(rng.nextInt());
+                resultTextField.setText(String.valueOf(newRandomInteger));
             }
         });
     }
@@ -65,6 +85,10 @@ public class MiniGUI {
          * Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+        /*
+         * Resize to the minimum size
+         */
+        frame.pack();
         /*
          * OK, ready to pull the frame onscreen
          */
