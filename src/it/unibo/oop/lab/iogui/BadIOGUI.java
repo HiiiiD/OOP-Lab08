@@ -5,14 +5,20 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -31,13 +37,24 @@ public class BadIOGUI {
     private final JFrame frame = new JFrame(TITLE);
 
     /**
-     * 
+     * Creates a frame with a panel in it.
      */
     public BadIOGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
         final JButton write = new JButton("Write on file");
-        canvas.add(write, BorderLayout.CENTER);
+        final JButton readButton = new JButton("Read");
+        final JPanel innerCenteredPanel = new JPanel();
+        final BoxLayout boxLayout = new BoxLayout(innerCenteredPanel, BoxLayout.X_AXIS);
+        innerCenteredPanel.setLayout(boxLayout);
+
+        innerCenteredPanel.add(write);
+        innerCenteredPanel.add(readButton);
+        /*
+         * Adds the centered panel to the main content panel
+         */
+        canvas.add(innerCenteredPanel, BorderLayout.CENTER);
+
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
@@ -58,6 +75,20 @@ public class BadIOGUI {
                 } catch (FileNotFoundException e1) {
                     JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
+                }
+            }
+        });
+        readButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final File fileToRead = new File(PATH);
+                try {
+                    final String stringifiedFile = FileUtils.readFileToString(fileToRead, StandardCharsets.UTF_8);
+                    System.out.println(stringifiedFile);
+                } catch (IOException e2) {
+                    JOptionPane.showMessageDialog(frame, e2, "File error", JOptionPane.ERROR_MESSAGE);
+                    e2.printStackTrace();
                 }
             }
         });
@@ -82,6 +113,10 @@ public class BadIOGUI {
          * Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+        /*
+         * Resize the frame to the minimum size
+         */
+        frame.pack();
         /*
          * OK, ready to pull the frame onscreen
          */
