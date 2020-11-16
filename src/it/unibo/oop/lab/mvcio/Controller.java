@@ -1,5 +1,12 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+
+import org.apache.commons.io.FileUtils;
+
 /**
  * 
  */
@@ -27,5 +34,51 @@ public class Controller {
      * System.getProperty("file.separator"). The combined use of those methods leads
      * to a software that runs correctly on every platform.
      */
+    private String currentFilePath = System.getProperty("user.home") + File.separator + "output.txt";
+    private File currentFile = new File(currentFilePath);
+
+    /**
+     * Set {@code newFile} as the new current file.
+     * @param newFile new current file
+     */
+    public void setFile(final File newFile) {
+        Objects.requireNonNull(newFile);
+        this.currentFile = newFile;
+        this.currentFilePath = newFile.getAbsolutePath();
+    }
+
+    /**
+     * Set {@code newFilePath} as the new path for the current file.
+     * @param newFilePath path of the new file
+     */
+    public void setFile(final String newFilePath) {
+        Objects.requireNonNull(newFilePath);
+        this.currentFile = new File(newFilePath);
+        this.currentFilePath = newFilePath;
+    }
+
+    /**
+     * Get the current file.
+     * @return the current file
+     */
+    public File getCurrentFile() {
+        return this.currentFile;
+    }
+
+    /**
+     * Get the current file path.
+     * @return the file path of the current file
+     */
+    public String getCurrentFilePath() {
+        return this.currentFilePath;
+    }
+    /**
+     * Save {@code content} to the current file.
+     * @param content content to save on the current file
+     * @throws IOException
+     */
+    public void saveContent(final String content) throws IOException {
+        FileUtils.write(this.currentFile, content, StandardCharsets.UTF_8);
+    }
 
 }

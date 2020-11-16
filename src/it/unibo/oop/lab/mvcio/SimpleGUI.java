@@ -1,9 +1,17 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /**
  * A very simple program using a graphical interface.
@@ -12,6 +20,8 @@ import javax.swing.JFrame;
 public final class SimpleGUI {
 
     private final JFrame frame = new JFrame();
+
+    private final Controller controller = new Controller();
 
     /*
      * Once the Controller is done, implement this class in such a way that:
@@ -34,7 +44,7 @@ public final class SimpleGUI {
      */
 
     /**
-     * builds a new {@link SimpleGUI}.
+     * Builds a new {@link SimpleGUI}.
      */
     public SimpleGUI() {
         /*
@@ -57,6 +67,45 @@ public final class SimpleGUI {
          * Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+
+        /**
+         * Create the main content pane
+         */
+        final JPanel mainContentPane = new JPanel();
+        final BorderLayout mainContentPaneLayout = new BorderLayout();
+        mainContentPane.setLayout(mainContentPaneLayout);
+
+        final JTextArea textArea = new JTextArea();
+        mainContentPane.add(textArea, BorderLayout.CENTER);
+        final JButton saveButton = new JButton("Save");
+        mainContentPane.add(saveButton, BorderLayout.SOUTH);
+
+        /*
+         * Save button handler
+         */
+        saveButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try {
+                    controller.saveContent(textArea.getText());
+                } catch (IOException e1) {
+                    JOptionPane.showMessageDialog(frame, e1, "File error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                }
+            }
+
+        });
+
+        frame.setContentPane(mainContentPane);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setVisible(true);
+    }
+
+    public static void main(final String[] args) {
+        new SimpleGUI();
     }
 
 }
