@@ -31,21 +31,20 @@ public class IOController implements Controller {
     @Override
     public List<String> getHistory() {
         /*
-         * Return a copy of the field 
+         * Return a copy of the field
          */
-        return new ArrayList<String>(printedStrings);
+        return new ArrayList<String>(this.printedStrings);
     }
 
     /**
-     * {@inheritDoc}
-     * Prints the string to the standard output
+     * {@inheritDoc} Prints the string to the standard output
      */
     @Override
     public void printCurrentString() {
         if (this.nextString == null) {
             throw new IllegalStateException("The next string cannot be null");
         }
-        printedStrings.add(this.nextString);
+        this.printedStrings.add(this.nextString);
         System.out.println(this.nextString);
     }
 

@@ -28,22 +28,31 @@ public interface Controller {
      */
     /**
      * Set the next string to print.
-     * @param content content to print
+     * 
+     * @param content
+     *                    content to print
      */
     void setNextString(String content);
+
     /**
      * Gets the string that needs to be printed next.
+     * 
      * @return the next string to print
      */
     String getNextString();
+
     /**
      * Get the history of the printed strings.
+     * 
      * @return an ordered list by date of the printed strings
      */
     List<String> getHistory();
+
     /**
      * Print the current string.
-     * @throws IllegalStateException if the current string is unset
+     * 
+     * @throws IllegalStateException
+     *                                   if the current string is unset
      */
     void printCurrentString();
 

@@ -35,11 +35,13 @@ public class Controller {
      * to a software that runs correctly on every platform.
      */
     private String currentFilePath = System.getProperty("user.home") + File.separator + "output.txt";
-    private File currentFile = new File(currentFilePath);
+    private File currentFile = new File(this.currentFilePath);
 
     /**
      * Set {@code newFile} as the new current file.
-     * @param newFile new current file
+     * 
+     * @param newFile
+     *                    new current file
      */
     public void setFile(final File newFile) {
         Objects.requireNonNull(newFile);
@@ -49,7 +51,9 @@ public class Controller {
 
     /**
      * Set {@code newFilePath} as the new path for the current file.
-     * @param newFilePath path of the new file
+     * 
+     * @param newFilePath
+     *                        path of the new file
      */
     public void setFile(final String newFilePath) {
         Objects.requireNonNull(newFilePath);
@@ -59,6 +63,7 @@ public class Controller {
 
     /**
      * Get the current file.
+     * 
      * @return the current file
      */
     public File getCurrentFile() {
@@ -67,14 +72,18 @@ public class Controller {
 
     /**
      * Get the current file path.
+     * 
      * @return the file path of the current file
      */
     public String getCurrentFilePath() {
         return this.currentFilePath;
     }
+
     /**
      * Save {@code content} to the current file.
-     * @param content content to save on the current file
+     * 
+     * @param content
+     *                    content to save on the current file
      * @throws IOException
      */
     public void saveContent(final String content) throws IOException {

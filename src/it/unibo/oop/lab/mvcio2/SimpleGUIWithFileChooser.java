@@ -59,13 +59,13 @@ public final class SimpleGUIWithFileChooser {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        frame.setSize(sw / 2, sh / 2);
+        this.frame.setSize(sw / 2, sh / 2);
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this flag
          * makes the OS window manager take care of the default positioning on screen.
          * Results may vary, but it is generally the best choice.
          */
-        frame.setLocationByPlatform(true);
+        this.frame.setLocationByPlatform(true);
 
         /**
          * Create the main content pane
@@ -80,13 +80,13 @@ public final class SimpleGUIWithFileChooser {
         mainContentPane.add(saveButton, BorderLayout.SOUTH);
 
         /*
-         * Create the north panel for browsing files 
+         * Create the north panel for browsing files
          */
         final JPanel browsePanel = new JPanel();
         /**
          * Create a textfield that is non-modifiable
          */
-        final JTextField browseTextField = new JTextField(controller.getCurrentFilePath());
+        final JTextField browseTextField = new JTextField(this.controller.getCurrentFilePath());
         browseTextField.setEditable(false);
         final JButton browseFilesButton = new JButton("Browse...");
         browsePanel.setLayout(new BorderLayout());
@@ -101,13 +101,14 @@ public final class SimpleGUIWithFileChooser {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 /**
-                 * Create a file chooser with the default file set as the {@link Controller.getCurrentFile()}
+                 * Create a file chooser with the default file set as the
+                 * {@link Controller.getCurrentFile()}
                  */
-                final JFileChooser fileChooser = new JFileChooser(controller.getCurrentFile());
+                final JFileChooser fileChooser = new JFileChooser(SimpleGUIWithFileChooser.this.controller.getCurrentFile());
                 final int dialogResult = fileChooser.showSaveDialog(browsePanel);
                 if (dialogResult == JFileChooser.APPROVE_OPTION) {
-                    controller.setFile(fileChooser.getSelectedFile());
-                    browseTextField.setText(controller.getCurrentFilePath());
+                    SimpleGUIWithFileChooser.this.controller.setFile(fileChooser.getSelectedFile());
+                    browseTextField.setText(SimpleGUIWithFileChooser.this.controller.getCurrentFilePath());
                 } else if (dialogResult != JFileChooser.CANCEL_OPTION) {
                     JOptionPane.showMessageDialog(browsePanel, "Error occurred");
                     System.out.println(dialogResult);
@@ -125,20 +126,21 @@ public final class SimpleGUIWithFileChooser {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 try {
-                    controller.saveContent(textArea.getText());
-                } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(frame, e1, "File error", JOptionPane.ERROR_MESSAGE);
+                    SimpleGUIWithFileChooser.this.controller.saveContent(textArea.getText());
+                } catch (final IOException e1) {
+                    JOptionPane.showMessageDialog(SimpleGUIWithFileChooser.this.frame, e1, "File error",
+                            JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
                 }
             }
 
         });
 
-        frame.setContentPane(mainContentPane);
+        this.frame.setContentPane(mainContentPane);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setVisible(true);
+        this.frame.setVisible(true);
     }
 
     public static void main(final String[] args) {

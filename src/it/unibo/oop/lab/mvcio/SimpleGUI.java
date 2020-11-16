@@ -60,13 +60,13 @@ public final class SimpleGUI {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        frame.setSize(sw / 2, sh / 2);
+        this.frame.setSize(sw / 2, sh / 2);
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this flag
          * makes the OS window manager take care of the default positioning on screen.
          * Results may vary, but it is generally the best choice.
          */
-        frame.setLocationByPlatform(true);
+        this.frame.setLocationByPlatform(true);
 
         /**
          * Create the main content pane
@@ -88,20 +88,20 @@ public final class SimpleGUI {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 try {
-                    controller.saveContent(textArea.getText());
-                } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(frame, e1, "File error", JOptionPane.ERROR_MESSAGE);
+                    SimpleGUI.this.controller.saveContent(textArea.getText());
+                } catch (final IOException e1) {
+                    JOptionPane.showMessageDialog(SimpleGUI.this.frame, e1, "File error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
                 }
             }
 
         });
 
-        frame.setContentPane(mainContentPane);
+        this.frame.setContentPane(mainContentPane);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setVisible(true);
+        this.frame.setVisible(true);
     }
 
     public static void main(final String[] args) {

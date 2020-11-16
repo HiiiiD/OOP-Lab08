@@ -28,7 +28,8 @@ public class MiniGUI {
     private final JFrame frame = new JFrame(TITLE);
 
     /**
-     * Create a simple application with a GUI with a button and a panel in the center of the window.
+     * Create a simple application with a GUI with a button and a panel in the
+     * center of the window.
      */
     public MiniGUI() {
         final JPanel canvas = new JPanel();
@@ -51,16 +52,16 @@ public class MiniGUI {
         final JTextField resultTextField = new JTextField();
         canvas.add(resultTextField, BorderLayout.NORTH);
 
-        frame.setContentPane(canvas);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setContentPane(canvas);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                final int newRandomInteger = rng.nextInt();
-                System.out.println(rng.nextInt());
+                final int newRandomInteger = MiniGUI.this.rng.nextInt();
+                System.out.println(MiniGUI.this.rng.nextInt());
                 resultTextField.setText(String.valueOf(newRandomInteger));
             }
         });
@@ -81,21 +82,21 @@ public class MiniGUI {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        frame.setSize(sw / PROPORTION, sh / PROPORTION);
+        this.frame.setSize(sw / PROPORTION, sh / PROPORTION);
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this flag
          * makes the OS window manager take care of the default positioning on screen.
          * Results may vary, but it is generally the best choice.
          */
-        frame.setLocationByPlatform(true);
+        this.frame.setLocationByPlatform(true);
         /*
          * Resize to the minimum size
          */
-        frame.pack();
+        this.frame.pack();
         /*
          * OK, ready to pull the frame onscreen
          */
-        frame.setVisible(true);
+        this.frame.setVisible(true);
     }
 
     /**

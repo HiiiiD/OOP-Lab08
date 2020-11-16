@@ -63,14 +63,12 @@ public final class SimpleGUI {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        frame.setSize(sw / 2, sh / 2);
+        this.frame.setSize(sw / 2, sh / 2);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final JPanel mainContentPanel = new JPanel();
         mainContentPanel.setLayout(new BorderLayout());
-
 
         final JTextField textField = new JTextField();
         final JTextArea textArea = new JTextArea();
@@ -79,8 +77,8 @@ public final class SimpleGUI {
          */
         final JPanel bottomPanel = new JPanel();
         /*
-         * Use a grid layout to divide the space equally
-         * One row and two columns to divide width in half
+         * Use a grid layout to divide the space equally One row and two columns to
+         * divide width in half
          */
         final int rows = 1;
         final int columns = 2;
@@ -90,11 +88,9 @@ public final class SimpleGUI {
         bottomPanel.add(printButton);
         bottomPanel.add(showHistoryButton);
 
-
         mainContentPanel.add(textField, BorderLayout.NORTH);
         mainContentPanel.add(textArea, BorderLayout.CENTER);
         mainContentPanel.add(bottomPanel, BorderLayout.SOUTH);
-
 
         /*
          * Click handlers
@@ -103,8 +99,8 @@ public final class SimpleGUI {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                controller.setNextString(textField.getText());
-                controller.printCurrentString();
+                SimpleGUI.this.controller.setNextString(textField.getText());
+                SimpleGUI.this.controller.printCurrentString();
             }
         });
 
@@ -112,21 +108,21 @@ public final class SimpleGUI {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                final List<String> history = controller.getHistory();
+                final List<String> history = SimpleGUI.this.controller.getHistory();
                 textArea.setText(history.toString());
             }
         });
 
-        frame.setContentPane(mainContentPanel);
+        this.frame.setContentPane(mainContentPanel);
 
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this flag
          * makes the OS window manager take care of the default positioning on screen.
          * Results may vary, but it is generally the best choice.
          */
-        frame.setLocationByPlatform(true);
+        this.frame.setLocationByPlatform(true);
 
-        frame.setVisible(true);
+        this.frame.setVisible(true);
     }
 
     public static void main(final String[] args) {

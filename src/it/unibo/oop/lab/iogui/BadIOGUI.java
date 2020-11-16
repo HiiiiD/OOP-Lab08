@@ -55,8 +55,8 @@ public class BadIOGUI {
          */
         canvas.add(innerCenteredPanel, BorderLayout.CENTER);
 
-        frame.setContentPane(canvas);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setContentPane(canvas);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
          * Handlers
          */
@@ -71,9 +71,9 @@ public class BadIOGUI {
                  * unresponsive.
                  */
                 try (PrintStream ps = new PrintStream(PATH)) {
-                    ps.print(rng.nextInt());
-                } catch (FileNotFoundException e1) {
-                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
+                    ps.print(BadIOGUI.this.rng.nextInt());
+                } catch (final FileNotFoundException e1) {
+                    JOptionPane.showMessageDialog(BadIOGUI.this.frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
                 }
             }
@@ -86,8 +86,8 @@ public class BadIOGUI {
                 try {
                     final String stringifiedFile = FileUtils.readFileToString(fileToRead, StandardCharsets.UTF_8);
                     System.out.println(stringifiedFile);
-                } catch (IOException e2) {
-                    JOptionPane.showMessageDialog(frame, e2, "File error", JOptionPane.ERROR_MESSAGE);
+                } catch (final IOException e2) {
+                    JOptionPane.showMessageDialog(BadIOGUI.this.frame, e2, "File error", JOptionPane.ERROR_MESSAGE);
                     e2.printStackTrace();
                 }
             }
@@ -109,21 +109,21 @@ public class BadIOGUI {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        frame.setSize(sw / PROPORTION, sh / PROPORTION);
+        this.frame.setSize(sw / PROPORTION, sh / PROPORTION);
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this flag
          * makes the OS window manager take care of the default positioning on screen.
          * Results may vary, but it is generally the best choice.
          */
-        frame.setLocationByPlatform(true);
+        this.frame.setLocationByPlatform(true);
         /*
          * Resize the frame to the minimum size
          */
-        frame.pack();
+        this.frame.pack();
         /*
          * OK, ready to pull the frame onscreen
          */
-        frame.setVisible(true);
+        this.frame.setVisible(true);
     }
 
     /**
