@@ -57,7 +57,11 @@ public class Controller {
      */
     public void setFile(final String newFilePath) {
         Objects.requireNonNull(newFilePath);
-        this.currentFile = new File(newFilePath);
+        final File newFile = new File(newFilePath);
+        if (!newFile.isFile()) {
+            throw new IllegalArgumentException(newFile.getAbsolutePath() + " is not a file");
+        }
+        this.currentFile = newFile;
         this.currentFilePath = newFilePath;
     }
 
