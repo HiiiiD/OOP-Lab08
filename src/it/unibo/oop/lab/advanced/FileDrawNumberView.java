@@ -84,7 +84,7 @@ public class FileDrawNumberView implements DrawNumberView {
             bufferedWriter.write(message + "\n");
         } catch (final IOException e) {
             /*
-             * If an {@link IOException} occurs, print to the current stream
+             * If an IOException occurs, print to the current stream
              */
             System.out.println(e.getMessage());
         }
