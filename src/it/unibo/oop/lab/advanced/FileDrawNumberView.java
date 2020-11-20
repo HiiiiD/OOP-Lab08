@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class FileDrawNumberView implements DrawNumberView {
 
-    private static final String LOG_FILE_PATH = "log.txt";
+    private static final String LOG_FILE_PATH = "log.log";
 
     private File currentLogFile;
 
@@ -84,7 +84,7 @@ public class FileDrawNumberView implements DrawNumberView {
             bufferedWriter.write(message + "\n");
         } catch (final IOException e) {
             /*
-             * If an IOException occurs, print to the current stream
+             * If an IOException occurs, print to the stdout stream
              */
             System.out.println(e.getMessage());
         }
