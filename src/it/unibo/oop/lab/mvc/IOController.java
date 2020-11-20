@@ -2,6 +2,7 @@ package it.unibo.oop.lab.mvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class IOController implements Controller {
 
@@ -14,6 +15,7 @@ public class IOController implements Controller {
      */
     @Override
     public void setNextString(final String content) {
+        Objects.requireNonNull(content);
         this.nextString = content;
     }
 
