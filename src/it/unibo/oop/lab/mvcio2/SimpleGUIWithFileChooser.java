@@ -1,21 +1,18 @@
 package it.unibo.oop.lab.mvcio2;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import it.unibo.oop.lab.mvcio.Controller;
+import it.unibo.oop.lab.mvcio.SimpleGUI;
 
 /**
  * A very simple program using a graphical interface.
@@ -23,9 +20,88 @@ import it.unibo.oop.lab.mvcio.Controller;
  */
 public final class SimpleGUIWithFileChooser {
 
-    private final JFrame frame = new JFrame();
+    private final Controller controller;
 
-    private final Controller controller = new Controller();
+    private final JPanel mainContentPane;
+
+    /**
+     * Passing a {@link SimpleGUI} to build the main layout of the "app".
+     * 
+     * @param gui
+     *                {@link SimpleGUI} to use
+     */
+    public SimpleGUIWithFileChooser(final SimpleGUI gui) {
+
+        final SimpleGUI simpleGUI = Objects.requireNonNull(gui);
+        // Get the controller from the GUI
+        this.controller = simpleGUI.getController();
+        // Get the current mainContentPane from the simple gui
+        this.mainContentPane = simpleGUI.getMainContentPane();
+        /*
+         * Create the north panel for browsing files
+         */
+        final JPanel browsePanel = new JPanel();
+        /*
+         * Create a textfield
+         */
+        final JTextField browseTextField = new JTextField(this.controller.getCurrentFilePath());
+        /*
+         * Make it unmodifiable
+         */
+        browseTextField.setEditable(false);
+        final JButton browseFilesButton = new JButton("Browse...");
+        browsePanel.setLayout(new BorderLayout());
+        browsePanel.add(browseTextField, BorderLayout.CENTER);
+        browsePanel.add(browseFilesButton, BorderLayout.LINE_END);
+
+        /*
+         * Open a {@link JFileChooser} on click
+         */
+        browseFilesButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                /**
+                 * Create a file chooser with the default file set as the
+                 * {@link Controller.getCurrentFile()}
+                 */
+                final JFileChooser fileChooser = new JFileChooser(SimpleGUIWithFileChooser.this.controller.getCurrentFile());
+                final int dialogResult = fileChooser.showSaveDialog(browsePanel);
+                // If the user clicked "OK"
+                if (dialogResult == JFileChooser.APPROVE_OPTION) {
+                    // Set the new current file to the selected file
+                    SimpleGUIWithFileChooser.this.controller.setFile(fileChooser.getSelectedFile());
+                    browseTextField.setText(SimpleGUIWithFileChooser.this.controller.getCurrentFilePath());
+                } else if (dialogResult != JFileChooser.CANCEL_OPTION) {
+                    JOptionPane.showMessageDialog(browsePanel, "Error occurred");
+                    System.out.println(dialogResult);
+                }
+            }
+        });
+
+        this.mainContentPane.add(browsePanel, BorderLayout.NORTH);
+
+        // Make the main content panel refresh to add the new components
+        this.mainContentPane.revalidate();
+    }
+
+    /**
+     * Get the current controller.
+     * 
+     * @return the current controlelr
+     */
+    public Controller getController() {
+        return this.controller;
+    }
+
+    /**
+     * Get the main content pane.
+     * 
+     * @return the main content pane
+     */
+    public JPanel getMainContentPane() {
+        return this.mainContentPane;
+    }
 
     /*
      * 
@@ -56,91 +132,7 @@ public final class SimpleGUIWithFileChooser {
      * Build a simple GUI with a file chooser with the MVC pattern.
      */
     public SimpleGUIWithFileChooser() {
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int sw = (int) screen.getWidth();
-        final int sh = (int) screen.getHeight();
-        this.frame.setSize(sw / 2, sh / 2);
-        /*
-         * Instead of appearing at (0,0), upper left corner of the screen, this flag
-         * makes the OS window manager take care of the default positioning on screen.
-         * Results may vary, but it is generally the best choice.
-         */
-        this.frame.setLocationByPlatform(true);
-
-        /**
-         * Create the main content pane
-         */
-        final JPanel mainContentPane = new JPanel();
-        final BorderLayout mainContentPaneLayout = new BorderLayout();
-        mainContentPane.setLayout(mainContentPaneLayout);
-
-        final JTextArea textArea = new JTextArea();
-        mainContentPane.add(textArea, BorderLayout.CENTER);
-        final JButton saveButton = new JButton("Save");
-        mainContentPane.add(saveButton, BorderLayout.SOUTH);
-
-        /*
-         * Create the north panel for browsing files
-         */
-        final JPanel browsePanel = new JPanel();
-        /**
-         * Create a textfield that is non-modifiable
-         */
-        final JTextField browseTextField = new JTextField(this.controller.getCurrentFilePath());
-        browseTextField.setEditable(false);
-        final JButton browseFilesButton = new JButton("Browse...");
-        browsePanel.setLayout(new BorderLayout());
-        browsePanel.add(browseTextField, BorderLayout.CENTER);
-        browsePanel.add(browseFilesButton, BorderLayout.LINE_END);
-
-        /*
-         * Open a {@link JFileChooser} on click
-         */
-        browseFilesButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                /**
-                 * Create a file chooser with the default file set as the
-                 * {@link Controller.getCurrentFile()}
-                 */
-                final JFileChooser fileChooser = new JFileChooser(SimpleGUIWithFileChooser.this.controller.getCurrentFile());
-                final int dialogResult = fileChooser.showSaveDialog(browsePanel);
-                if (dialogResult == JFileChooser.APPROVE_OPTION) {
-                    SimpleGUIWithFileChooser.this.controller.setFile(fileChooser.getSelectedFile());
-                    browseTextField.setText(SimpleGUIWithFileChooser.this.controller.getCurrentFilePath());
-                } else if (dialogResult != JFileChooser.CANCEL_OPTION) {
-                    JOptionPane.showMessageDialog(browsePanel, "Error occurred");
-                    System.out.println(dialogResult);
-                }
-            }
-        });
-
-        mainContentPane.add(browsePanel, BorderLayout.NORTH);
-
-        /*
-         * Save button handler
-         */
-        saveButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                try {
-                    SimpleGUIWithFileChooser.this.controller.saveContent(textArea.getText());
-                } catch (final IOException e1) {
-                    JOptionPane.showMessageDialog(SimpleGUIWithFileChooser.this.frame, e1, "File error",
-                            JOptionPane.ERROR_MESSAGE);
-                    e1.printStackTrace();
-                }
-            }
-
-        });
-
-        this.frame.setContentPane(mainContentPane);
-
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        this.frame.setVisible(true);
+        this(new SimpleGUI());
     }
 
     public static void main(final String[] args) {

@@ -23,6 +23,8 @@ public final class SimpleGUI {
 
     private final Controller controller = new Controller();
 
+    private final JPanel mainContentPane = new JPanel();
+
     /*
      * Once the Controller is done, implement this class in such a way that:
      * 
@@ -71,14 +73,12 @@ public final class SimpleGUI {
         /**
          * Create the main content pane
          */
-        final JPanel mainContentPane = new JPanel();
         final BorderLayout mainContentPaneLayout = new BorderLayout();
-        mainContentPane.setLayout(mainContentPaneLayout);
-
-        final JTextArea textArea = new JTextArea();
-        mainContentPane.add(textArea, BorderLayout.CENTER);
+        this.mainContentPane.setLayout(mainContentPaneLayout);
+        final JTextArea contentTextArea = new JTextArea();
+        this.mainContentPane.add(contentTextArea, BorderLayout.CENTER);
         final JButton saveButton = new JButton("Save");
-        mainContentPane.add(saveButton, BorderLayout.SOUTH);
+        this.mainContentPane.add(saveButton, BorderLayout.SOUTH);
 
         /*
          * Save button handler
@@ -88,7 +88,7 @@ public final class SimpleGUI {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 try {
-                    SimpleGUI.this.controller.saveContent(textArea.getText());
+                    SimpleGUI.this.controller.saveContent(contentTextArea.getText());
                 } catch (final IOException e1) {
                     JOptionPane.showMessageDialog(SimpleGUI.this.frame, e1, "File error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
@@ -97,11 +97,30 @@ public final class SimpleGUI {
 
         });
 
-        this.frame.setContentPane(mainContentPane);
+        this.frame.setContentPane(this.mainContentPane);
 
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Set visible by default
         this.frame.setVisible(true);
+    }
+
+    /**
+     * Get the current controller.
+     * 
+     * @return the current {@link Controller}
+     */
+    public Controller getController() {
+        return this.controller;
+    }
+
+    /**
+     * Get the main content pane.
+     * 
+     * @return the main content pane.
+     */
+    public JPanel getMainContentPane() {
+        return this.mainContentPane;
     }
 
     public static void main(final String[] args) {
